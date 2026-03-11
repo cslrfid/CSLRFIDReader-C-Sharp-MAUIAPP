@@ -1,0 +1,64 @@
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using Plugin.BLE.Abstractions.Contracts;
+using static CSLibrary.RFIDDEVICE;
+
+namespace CSLHandheldReader_C_Sharp_MAUIAPP.Maui.ViewModels
+{
+    public class DeviceListItemViewModel : INotifyPropertyChanged
+    {
+        public IDevice Device { get; private set; }
+        public MODEL BTServiceType { get; private set; }
+        
+        public Guid Id => Device.Id;
+        
+        public string IdString 
+        {
+            get 
+            {
+                if (DeviceInfo.Platform == DevicePlatform.iOS)
+                    return Id.ToString();
+
+                string idString = Id.ToString().ToUpper();
+                string macString = idString.Substring(idString.Length - 12, 2) + ":";
+                macString += idString.Substring(idString.Length - 10, 2) + ":";
+                macString += idString.Substring(idString.Length - 8, 2) + ":";
+                macString += idString.Substring(idString.Length - 6, 2) + ":";
+                macString += idString.Substring(idString.Length - 4, 2) + ":";
+                macString += idString.Substring(idString.Length - 2, 2);
+                return macString;
+            } 
+        }
+        
+        public string Model => BTServiceType.ToString();
+        public bool IsConnected { get; private set; }
+        public int Rssi => Device.Rssi;
+        public string Name => Device.Name;
+
+        public DeviceListItemViewModel(IDevice device, MODEL BTServiceType, bool isConnected = false)
+        {
+            this.Device = device;
+            this.BTServiceType = BTServiceType;
+            this.IsConnected = isConnected;
+        }
+
+        public void Update(IDevice? newDevice = null)
+        {
+            if (newDevice != null)
+            {
+                Device = newDevice;
+            }
+            OnPropertyChanged(nameof(IsConnected));
+            OnPropertyChanged(nameof(Rssi));
+        }
+
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+    }
+}

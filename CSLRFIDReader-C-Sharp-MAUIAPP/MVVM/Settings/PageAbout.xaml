@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CSLHandheldReader_C_Sharp_MAUIAPP.Maui.Views.PageAbout"
+             Title="About">
+
+	<StackLayout Margin="0,100,0,0">
+		<StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+            <Label x:Name="labelModel" Text="Model"/>
+            <Label x:Name="labelAppVer" Text="Application Version"/>
+            <Label x:Name="labelLibVer" Text="Library Version"/>
+            <Label x:Name="labelBtFwVer" Text="Bluetooth Firmware Version"/>
+            <Label x:Name="labelRFIDFwVer" Text="RFID Firmware Version"/>
+            <Label x:Name="labelSiliconlabFwVer" Text="SiliconLab IC Firmware Version"/>
+            <Label x:Name="labelSerialNumber" Text="Reader Serial Number"/>
+            <Label x:Name="labelPCBSerialNumber" Text="PCB Serial Number"/>
+        </StackLayout>
+
+		<StackLayout Orientation="Vertical" VerticalOptions="EndAndExpand" >
+			<Button Text="Open Privacy policy" FontSize="Large" HorizontalOptions="StartAndExpand" Clicked="buttonOpenPrivacypolicyClicked"/>
+		</StackLayout>
+
+	</StackLayout>
+
+</ContentPage>

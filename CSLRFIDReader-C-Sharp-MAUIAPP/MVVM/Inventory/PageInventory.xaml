@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CSLHandheldReader_C_Sharp_MAUIAPP.Maui.ViewModels"
+             x:Class="CSLHandheldReader_C_Sharp_MAUIAPP.Maui.Views.PageInventory"
+             Title="RFID Inventory">
+
+    <StackLayout Margin="20">
+        <ListView ItemsSource="{Binding TagsInfo}">
+
+            <ListView.Header>
+                <StackLayout Padding="10,5,0,5" BackgroundColor="#cccccc">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.2*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Text="{Binding EPCHeaderText}" VerticalTextAlignment="Center" FontSize="Small" />
+                        <Label Grid.Column="1" Text="{Binding RSSIHeaderText}" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" FontSize="Small" />
+                    </Grid>
+                </StackLayout>
+            </ListView.Header>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.8*" />
+                                <ColumnDefinition Width="0.2*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Column="0" 
+                           Text="{Binding EPC}" 
+                           FontAttributes="Bold"
+                           VerticalOptions="Start"/>
+                            <Label Grid.Column="1" 
+                           Text="{Binding RSSI}"
+                           VerticalOptions="End" />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <VerticalStackLayout Spacing="10">
+
+            <Button Text= "{Binding startInventoryButtonText}" FontSize="Large" Command="{Binding OnStartInventoryButtonCommand}" HeightRequest="50" />
+
+            <Grid HeightRequest="50">
+                <Button Text="HEX" FontSize="Large" Command="{Binding OnHEXButtonCommand}" HorizontalOptions="Start" />
+                <Button Text="UPC" FontSize="Large" Command="{Binding OnUPCButtonommand}" HorizontalOptions="Center" />
+                <Button Text="SGTIN" FontSize="Large" Command="{Binding OnSGTINButtonCommand}" HorizontalOptions="End" />
+            </Grid>
+
+            <Grid HeightRequest="50">
+                <Button Text="Clear" FontSize="Large" Command="{Binding OnClearButtonCommand}" HorizontalOptions="Start" />
+                <Button Text="Send" FontSize="Large" Command="{Binding OnSendDataCommand}" HorizontalOptions="Center" />
+                <Button Text="Share" FontSize="Large" Command="{Binding OnShareDataCommand}" HorizontalOptions="Center" />
+                <Button Text="Save" FontSize="Large" Command="{Binding OnSaveDataCommand}" HorizontalOptions="End" />
+            </Grid>
+
+            <Grid>
+                <Label Text="{Binding FilterIndicator}" FontSize="Small" TextColor="Red" HorizontalOptions="Start" VerticalTextAlignment="End"/>
+                <Label Text="{Binding InventoryTime}" FontSize="Small" HorizontalOptions="Center" VerticalOptions="End" />
+                <Label Text="{Binding DebugMessage}" FontSize="Small" HorizontalOptions="End" VerticalOptions="End" />
+            </Grid>
+
+            <Grid>
+                <Label Text="{Binding numberOfTagsText}" FontSize="Small" HorizontalOptions="Start" VerticalOptions="Center" />
+                <Label Text="{Binding labelVoltage}" FontSize="Small" TextColor = "{Binding labelVoltageTextColor}" HorizontalOptions="Center" VerticalOptions="Center" />
+                <Label Text="{Binding tagPerSecondText}" FontSize="Small" HorizontalOptions="End" VerticalOptions="Center" />
+            </Grid>
+        </VerticalStackLayout>
+
+    </StackLayout>
+
+</ContentPage>
+
