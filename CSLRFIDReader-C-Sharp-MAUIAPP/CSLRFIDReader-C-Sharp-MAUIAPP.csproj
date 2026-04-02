@@ -45,10 +45,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\Images\csl.png" Color="#FFFFFF" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Images\csl.png" Color="#512BD4" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -76,6 +76,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
 		<PackageReference Include="Plugin.Maui.Audio" Version="4.0.0" />
 		<PackageReference Include="Plugin.BLE" Version="3.0.0" />
+		<PackageReference Include="CSLibrary2026" Version="0.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -87,8 +88,7 @@
 	  <Folder Include="Resources\Music\" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="S:\Projects\GitHub\CSLibrary\CSLibrary2026\CSLibrary2026.csproj" />
-	</ItemGroup>
+	<!-- CSLibrary2026 local path reference (for development on Windows with local CSLibrary2026 checkout) -->
+	<!-- <ProjectReference Include="S:\Projects\GitHub\CSLibrary\CSLibrary2026\CSLibrary2026.csproj" /> -->
 
 </Project>

@@ -3,6 +3,7 @@ using Plugin.BLE;
 using Plugin.BLE.Abstractions.Contracts;
 using CSLHandheldReader_C_Sharp_MAUIAPP.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Maui.Controls;
 
 namespace CSLHandheldReader_C_Sharp_MAUIAPP.Maui.Views;
 
@@ -66,5 +67,17 @@ public partial class PageDeviceList : ContentPage
         {
             System.Diagnostics.Debug.WriteLine($"Permission check error: {ex.Message}");
         }
+    }
+
+    private void OnBluetoothModeClicked(object sender, EventArgs e)
+    {
+        if (_viewModel != null)
+            _viewModel.ConnectionMode = ConnectionModeEnum.Bluetooth;
+    }
+
+    private void OnTcpModeClicked(object sender, EventArgs e)
+    {
+        if (_viewModel != null)
+            _viewModel.ConnectionMode = ConnectionModeEnum.TCP;
     }
 }

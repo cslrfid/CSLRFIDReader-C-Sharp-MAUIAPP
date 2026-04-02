@@ -1,13 +1,9 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.3.11505.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSLRFIDReader-C-Sharp-MAUIAPP", "CSLRFIDReader-C-Sharp-MAUIAPP\CSLRFIDReader-C-Sharp-MAUIAPP.csproj", "{007D07C6-D2AD-4E58-8A25-C091089801C4}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSLibrary2026", "S:\Projects\GitHub\CSLibrary\CSLibrary2026\CSLibrary2026.csproj", "{4BD208CA-FF5A-8E7D-5BA6-5B3F6B62F7C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,16 +17,9 @@ Global
 		{007D07C6-D2AD-4E58-8A25-C091089801C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{007D07C6-D2AD-4E58-8A25-C091089801C4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{007D07C6-D2AD-4E58-8A25-C091089801C4}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{4BD208CA-FF5A-8E7D-5BA6-5B3F6B62F7C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4BD208CA-FF5A-8E7D-5BA6-5B3F6B62F7C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4BD208CA-FF5A-8E7D-5BA6-5B3F6B62F7C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4BD208CA-FF5A-8E7D-5BA6-5B3F6B62F7C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{4BD208CA-FF5A-8E7D-5BA6-5B3F6B62F7C8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {73214B58-31F2-4C14-B201-56D7237F21C8}

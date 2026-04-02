@@ -6,57 +6,51 @@
              x:Name="DevicePage"
              Title="Connect Reader">
 
-    <ContentPage.Behaviors>
-        <!--<mct:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
-        <mct:EventToCommandBehavior Command="{Binding DisappearingCommand}" EventName="Disappearing" />-->
-    </ContentPage.Behaviors>
-
     <ContentPage.Resources>
-        <ResourceDictionary>
-            <DataTemplate x:Key="DeviceItemTemplate">
-                <ViewCell>
-                    <ViewCell.ContextActions>
-                        <MenuItem Command="{Binding Path=BindingContext.DisconnectCommand, Source={x:Reference DevicePage}}"
-                                  CommandParameter="{Binding .}" 
-                                  IsDestructive="True"
-                                  Text="Disconnect"/>
-                        <MenuItem Command="{Binding Path=BindingContext.ConnectDisposeCommand, Source={x:Reference DevicePage}}"
-                                  CommandParameter="{Binding .}"
-                                  Text="Connect and Dispose"/>
-                    </ViewCell.ContextActions>
+        <DataTemplate x:Key="DeviceItemTemplate">
+            <ViewCell>
+                <ViewCell.ContextActions>
+                    <MenuItem Command="{Binding Path=BindingContext.DisconnectCommand, Source={x:Reference DevicePage}}"
+                              CommandParameter="{Binding .}" 
+                              IsDestructive="True"
+                              Text="Disconnect"/>
+                    <MenuItem Command="{Binding Path=BindingContext.ConnectDisposeCommand, Source={x:Reference DevicePage}}"
+                              CommandParameter="{Binding .}"
+                              Text="Connect and Dispose"/>
+                </ViewCell.ContextActions>
 
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
 
-                        <Grid.Triggers>
-                            <DataTrigger TargetType="Grid"
-                                         Binding="{Binding IsConnected}"
-                                         Value="true">
-                                <Setter Property="BackgroundColor" Value="#1A00FF00"></Setter>
-                            </DataTrigger>
-                        </Grid.Triggers>
+                    <Grid.Triggers>
+                        <DataTrigger TargetType="Grid"
+                                     Binding="{Binding IsConnected}"
+                                     Value="true">
+                            <Setter Property="BackgroundColor" Value="#1A00FF00"></Setter>
+                        </DataTrigger>
+                    </Grid.Triggers>
 
-                        <StackLayout Orientation="Vertical" VerticalOptions="Center">
-                            <Label Text="{Binding Name}" FontSize="18" TextColor="Gray" />
-                            <Label Text="{Binding IdString}" TextColor="Gray" FontSize="12"/>
-                            <Label Text="{Binding Model}" TextColor="Gray" FontSize="12"/>
-                        </StackLayout>
+                    <StackLayout Orientation="Vertical" VerticalOptions="Center">
+                        <Label Text="{Binding Name}" FontSize="18" TextColor="Gray" />
+                        <Label Text="{Binding IdString}" TextColor="Gray" FontSize="12"/>
+                        <Label Text="{Binding Model}" TextColor="Gray" FontSize="12"/>
+                    </StackLayout>
 
-                        <Label Grid.Column="1"
-                               Margin="10"
-                               Text="{Binding Rssi}"
-                               VerticalTextAlignment="Center"></Label>
-                    </Grid>
-                </ViewCell>
-            </DataTemplate>
-        </ResourceDictionary>
+                    <Label Grid.Column="1"
+                           Margin="10"
+                           Text="{Binding Rssi}"
+                           VerticalTextAlignment="Center"></Label>
+                </Grid>
+            </ViewCell>
+        </DataTemplate>
     </ContentPage.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -74,18 +68,82 @@
                    TextColor="White"></Label>
         </StackLayout>
 
-        <!-- Device list -->
-        <ListView Grid.Row="1" 
+        <!-- Connection mode toggle -->
+        <StackLayout Grid.Row="1" Padding="10" Spacing="10">
+            <Label Text="Connection Mode" FontSize="14" TextColor="Gray" HorizontalOptions="Center"/>
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="0">
+                <Button Text="Bluetooth"
+                        WidthRequest="120"
+                        CornerRadius="0"
+                        BackgroundColor="{Binding IsBluetoothMode, Converter={StaticResource BoolToColorConverter}}"
+                        TextColor="White"
+                        IsEnabled="{Binding IsBluetoothMode, Converter={StaticResource InverseBoolConverter}}"
+                        Clicked="OnBluetoothModeClicked"/>
+                <Button Text="TCP/IP"
+                        WidthRequest="120"
+                        CornerRadius="0"
+                        BackgroundColor="{Binding IsTcpMode, Converter={StaticResource BoolToColorConverter}}"
+                        TextColor="White"
+                        IsEnabled="{Binding IsTcpMode, Converter={StaticResource InverseBoolConverter}}"
+                        Clicked="OnTcpModeClicked"/>
+            </HorizontalStackLayout>
+        </StackLayout>
+
+        <!-- Bluetooth device list -->
+        <ListView Grid.Row="2" 
                   ItemsSource="{Binding Devices}" 
                   SelectedItem="{Binding SelectedDevice, Mode=TwoWay}"
                   IsPullToRefreshEnabled="true"
                   IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
+                  IsVisible="{Binding IsDeviceListVisible}"
                   RowHeight="80"
                   ItemTemplate="{StaticResource DeviceItemTemplate}">
         </ListView>
 
-        <!-- Information labels -->
-        <StackLayout Grid.Row="2" Padding="10">
+        <!-- TCP/IP connection panel -->
+        <StackLayout Grid.Row="2" 
+                     Padding="20" 
+                     Spacing="15"
+                     IsVisible="{Binding IsTcpPanelVisible}"
+                     VerticalOptions="Center">
+            <Frame BorderColor="LightGray" Padding="15" CornerRadius="8">
+                <StackLayout Spacing="12">
+                    <Label Text="CS203XL TCP Connection" FontSize="18" FontAttributes="Bold" TextColor="Gray" HorizontalOptions="Center"/>
+                    
+                    <StackLayout Spacing="5">
+                        <Label Text="IP Address" FontSize="14" TextColor="Gray"/>
+                        <Entry Text="{Binding IpAddress}" 
+                               Placeholder="192.168.1.100" 
+                               FontSize="16"
+                               Keyboard="Url"/>
+                    </StackLayout>
+                    
+                    <StackLayout Spacing="5">
+                        <Label Text="Port" FontSize="14" TextColor="Gray"/>
+                        <Entry Text="{Binding TcpPort}" 
+                               Placeholder="1515" 
+                               FontSize="16"
+                               Keyboard="Numeric"/>
+                    </StackLayout>
+
+                    <Button Text="Connect" 
+                            Command="{Binding ConnectTcpCommand}"
+                            BackgroundColor="#2196F3"
+                            TextColor="White"
+                            CornerRadius="5"
+                            HeightRequest="50"
+                            Margin="0,10,0,0"/>
+                </StackLayout>
+            </Frame>
+
+            <Label Text="Default: 192.168.1.100 : 1515" 
+                   FontSize="12" 
+                   TextColor="Gray" 
+                   HorizontalOptions="Center"/>
+        </StackLayout>
+
+        <!-- Information labels (Bluetooth mode only) -->
+        <StackLayout Grid.Row="3" Padding="10" IsVisible="{Binding IsBluetoothMode}">
             <Label Text="For CS108, Bluetooth 4.0 or 5.0 Phone" 
                    HorizontalOptions="Center"
                    FontSize="12"
@@ -96,10 +154,11 @@
                    TextColor="Gray"/>
         </StackLayout>
 
-        <!-- Control buttons -->
-        <StackLayout Grid.Row="3" 
+        <!-- Control buttons (Bluetooth mode only) -->
+        <StackLayout Grid.Row="4" 
                      Orientation="Horizontal" 
                      Padding="10"
+                     IsVisible="{Binding IsBluetoothMode}"
                      HorizontalOptions="Center">
             <Button Text="Stop Scan" 
                     Command="{Binding StopScanCommand}" 
